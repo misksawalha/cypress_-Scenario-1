@@ -27,6 +27,7 @@
 
 declare namespace Cypress{
     interface Chainable <Subject>{
+        catch(arg0: (error: any) => void): unknown;
         getByPlaceholder: typeof getByPlaceholder
     }
 

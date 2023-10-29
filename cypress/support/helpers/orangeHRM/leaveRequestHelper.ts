@@ -32,8 +32,9 @@ export function requestLeave(comment: string, duration:any, fromDate: string, le
         }
       }).then((response) => {
         console.log(response.body)
-        console.log(response.body.data.id)
         leaveId = response.body.data.id;
+        console.log("hi")
+        return response
       });
 }
 

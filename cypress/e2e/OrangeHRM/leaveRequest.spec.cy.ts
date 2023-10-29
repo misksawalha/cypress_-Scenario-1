@@ -15,19 +15,20 @@ describe('Leave Request Scenario', () => {
     cy.fixture('leaveData').as('leaveData')
     cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
     login("Admin", "admin123");
-
+    // add employee 
     cy.get('@data').then((infoData: any) => {
       cy.request({
         method: 'POST',
         url: 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees',
         body: {
-          firstName: infoData.addEmployee.firstName,
+          firstName:  infoData.addEmployee.firstName,
           middleName: infoData.addEmployee.middleName,
-          lastName: infoData.addEmployee.lastName,
+          lastName:   infoData.addEmployee.lastName,
           empPicture: infoData.addEmployee.empPicture,
           employeeId: infoData.addEmployee.employeeId
         }
       }).then((response) => {
+        //the id for the emp
         empNumberResponse = response.body.data.empNumber
       }).then(() => {
         cy.request({
@@ -44,6 +45,7 @@ describe('Leave Request Scenario', () => {
           expect(response).property('status').to.eq(200);
         });
       }).then(() => {
+        //add
         cy.request({
           method: 'POST',
           url: 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/leave/leave-entitlements',
@@ -82,9 +84,9 @@ describe('Leave Request Scenario', () => {
       login(username, password);
       console.log("after login")
       cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/leave/viewMyLeaveList")
-      // cy.get('@data').then((infoData1: any) => {
-      // checkDataInTable('.oxd-table', ["", `${infoData.leaveRequest.fromDate} to ${infoData.leaveRequest.toDate}`, `${infoData1.addEmployee.firstName} ${infoData1.addEmployee.middleName} ${infoData1.addEmployee.lastName}`]);
-      // })
+      cy.get('@data').then((infoData1: any) => {
+      checkDataInTable('.oxd-table', ["", `${infoData.leaveRequest.fromDate} to ${infoData.leaveRequest.toDate}`, `${infoData1.addEmployee.firstName} ${infoData1.addEmployee.middleName} ${infoData1.addEmployee.lastName}`]);
+      })
 
     });
     });
